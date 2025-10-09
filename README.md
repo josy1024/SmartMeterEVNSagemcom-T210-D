@@ -1,3 +1,7 @@
+# 2025 NEW FEATURE!
+* Shelly 3EM Emulator from MQTT [Open virtualshelly.MD](virtualshelly.MD)
+
+
 # Alle Infos zu diesem Projekt befinden sich auf meinem Blog
 https://www.michaelreitbauer.at/smart-meter-monitoring/
 
@@ -16,8 +20,6 @@ Smart Meter werden von der Netz NÖ GmbH eingebaut, auf Basis der gesetzlichen F
     * Kundennummer oder Vertragskontonummer
     * Zählernummer
     * Handynummer
-
-
 
 
 ### Zähler Hersteller
