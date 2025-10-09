@@ -2,7 +2,7 @@
 
 ## setup
 ```bash
-*  pip install flask paho-mqtt
+*  sudo pip install flask paho-mqtt
 ```
 
 ## configure
