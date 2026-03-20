@@ -1,16 +1,27 @@
 # mqtt to shelly 3EM Emulator
 
 ## setup
+
 ```bash
-*  sudo pip install flask paho-mqtt
+sudo pip install flask paho-mqtt
 ```
 
 ## configure
+
 * create /home/user/virtualshelly/config.json (from config.virtual-shelly.json)
 * update config to match your mqtt server
 * copy virtualshelly.py to /home/user/virtualshelly
 
 ## service config
+
+```bash
+python3 virtualshelly.py
+```
+
+Systemd-Service (Beispiel)
+-------------------------
+
+Falls Sie das Skript als Dienst betreiben möchten, verwenden Sie eine Unit wie diese (passen Sie `WorkingDirectory`/`ExecStart` an):
 
 ```bash
 /etc/systemd/system $ sudo vi virtualshelly.service
@@ -48,7 +59,4 @@ sudo systemctl enable virtualshelly.service
 
 ## links
 
-* if you have Node-RED or ESP32 you can also use this shelly3em emulator: https://github.com/BetaTobi/Shelly3EM-Emulator/wiki
-
-
-
+* if you have Node-RED or ESP32 you can also use this shelly3em emulator: <https://github.com/BetaTobi/Shelly3EM-Emulator/wiki>
