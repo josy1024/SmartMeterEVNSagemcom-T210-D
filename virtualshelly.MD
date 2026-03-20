@@ -68,27 +68,27 @@ sudo systemctl enable virtualshelly.service
 Kurz: `virtualshelly.py` emuliert ein Shelly 3EM‑Gerät und übersetzt Werte aus MQTT‑Topics in Shelly‑artige HTTP‑Antworten.
 
 * Globale Variablen:
- 	* `mqtt_data`: Dictionay, speichert die letzten MQTT‑Payloads keyed by Topic.
- 	* `start_time`: Startzeit des Skripts (für `uptime`, falls kein Topic geliefert wird).
- 	* `CONFIG`: geladene Konfiguration aus `config.json`.
- 	* `METER_TOPIC_MAP`: Map von Meter‑Index (0..2) zu Phase‑Topics (Spannung/Strom).
+  * `mqtt_data`: Dictionay, speichert die letzten MQTT‑Payloads keyed by Topic.
+  * `start_time`: Startzeit des Skripts (für `uptime`, falls kein Topic geliefert wird).
+  * `CONFIG`: geladene Konfiguration aus `config.json`.
+  * `METER_TOPIC_MAP`: Map von Meter‑Index (0..2) zu Phase‑Topics (Spannung/Strom).
 
 * Wichtige Funktionen:
- 	* `load_config()`: Liest `config.json` und füllt `CONFIG`. Bei fehlender/ungültiger Datei beendet sich das Programm.
- 	* `on_connect(client, userdata, flags, rc)`: Abonniert alle erwarteten Smartmeter‑Topics nach erfolgreicher MQTT‑Verbindung.
- 	* `on_message(client, userdata, msg)`: Schreibt empfangene Payloads (decoded) in `mqtt_data`.
- 	* `mqtt_thread()`: Baut MQTT‑Client (mit optionaler Auth) auf, verbindet sich mit dem Broker und startet die Loop. Bei Verbindungsfehlern wird mit Backoff neu versucht.
- 	* `safe_float(topic_key, default_value)`: Konvertiert Werte aus `mqtt_data` robust in `float` mit Default‑Fallback.
- 	* `get_meter_data(meter_index)`: Erzeugt das Shelly‑`emeter` Objekt (power, total, voltage, current, pf, …) für eine Phase anhand der konfigurierten Topics.
+  * `load_config()`: Liest `config.json` und füllt `CONFIG`. Bei fehlender/ungültiger Datei beendet sich das Programm.
+  * `on_connect(client, userdata, flags, rc)`: Abonniert alle erwarteten Smartmeter‑Topics nach erfolgreicher MQTT‑Verbindung.
+  * `on_message(client, userdata, msg)`: Schreibt empfangene Payloads (decoded) in `mqtt_data`.
+  * `mqtt_thread()`: Baut MQTT‑Client (mit optionaler Auth) auf, verbindet sich mit dem Broker und startet die Loop. Bei Verbindungsfehlern wird mit Backoff neu versucht.
+  * `safe_float(topic_key, default_value)`: Konvertiert Werte aus `mqtt_data` robust in `float` mit Default‑Fallback.
+  * `get_meter_data(meter_index)`: Erzeugt das Shelly‑`emeter` Objekt (power, total, voltage, current, pf, …) für eine Phase anhand der konfigurierten Topics.
 
 * Webendpunkte (Flask):
- 	* `GET /emeter/<int:meter_id>`: Gibt die Messwerte für `meter_id` 0–2 zurück.
- 	* `GET /status`: Liefert den vollständigen Shelly‑3EM Status (u. a. `emeters` Array, `total_power`, `uptime`, device metadata).
+  * `GET /emeter/<int:meter_id>`: Gibt die Messwerte für `meter_id` 0–2 zurück.
+  * `GET /status`: Liefert den vollständigen Shelly‑3EM Status (u. a. `emeters` Array, `total_power`, `uptime`, device metadata).
 
 * Verhalten/Hinweise:
- 	* Fehlende oder nicht konvertierbare Topic‑Werte werden durch sichere Defaults ersetzt (z. B. 230V, 0A).
- 	* Die Phase‑Leistung wird aus `Smartmeter/Wirkleistunggesamt` durch Drittelung berechnet, falls vorhanden.
- 	* `Leistungsfaktor` wird als Prozent im Topic erwartet und in Dezimal (z. B. 95 → 0.95) ausgegeben.
- 	* Der Flask‑Server wird standardmäßig auf Port `80` gestartet; auf Unix ist dafür Root nötig oder passen Sie den Port an.
+  * Fehlende oder nicht konvertierbare Topic‑Werte werden durch sichere Defaults ersetzt (z. B. 230V, 0A).
+  * Die Phase‑Leistung wird aus `Smartmeter/Wirkleistunggesamt` durch Drittelung berechnet, falls vorhanden.
+  * `Leistungsfaktor` wird als Prozent im Topic erwartet und in Dezimal (z. B. 95 → 0.95) ausgegeben.
+  * Der Flask‑Server wird standardmäßig auf Port `80` gestartet; auf Unix ist dafür Root nötig oder passen Sie den Port an.
 
 Wenn Sie möchten, erweitere ich die Doku um Beispiel‑JSON‑Responses für `/status` und `/emeter/<id>` oder füge ein `config.example.json` hinzu. Welche Option bevorzugen Sie?
