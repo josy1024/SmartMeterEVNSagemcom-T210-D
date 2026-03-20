@@ -46,3 +46,9 @@ sudo systemctl status virtualshelly.service
 sudo systemctl enable virtualshelly.service
 ```
 
+## links
+
+* if you have Node-RED or ESP32 you can also use this shelly3em emulator: https://github.com/BetaTobi/Shelly3EM-Emulator/wiki
+
+
+
